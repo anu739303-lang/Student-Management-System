@@ -15,63 +15,53 @@ body{
     justify-content:center;
     align-items:center;
 }
-
-form{
-    width:420px;
-    background:rgba(255,255,255,0.15);
-    backdrop-filter:blur(12px);
-    border-radius:18px;
-    padding:35px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.25);
-    border:1px solid rgba(255,255,255,0.2);
+form {
+  width: 100%;
+  max-width: 575px;
+  margin: 0 auto;
+  padding: 40px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
-form h2{
-    text-align:center;
-    color:#fff;
-    margin-bottom:25px;
-    font-size:28px;
+form h2 {
+  text-align: center;
+  color: rgb(46, 8, 96);
+  margin-bottom: 30px;
 }
 
-input{
-    width:100%;
-    padding:14px;
-    margin-bottom:18px;
-    border:none;
-    border-radius:10px;
-    outline:none;
-    background:rgba(255,255,255,0.9);
-    font-size:15px;
-    transition:0.3s;
+form input {
+  width: 100%;
+  padding: 16px 18px;
+  margin-bottom: 18px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
 }
 
-input:focus{
-    border:2px solid #4CAF50;
-    transform:scale(1.02);
-    box-shadow:0 0 10px rgba(76,175,80,0.3);
+form input:focus {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
 }
 
-input::placeholder{
-    color:#555;
+form button {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: #00c853;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-button{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    background:#00c853;
-    color:white;
-    font-size:17px;
-    font-weight:600;
-    cursor:pointer;
-    transition:.3s;
-}
-
-button:hover{
-    background:#00a844;
-    transform:translateY(-2px);
-    box-shadow:0 10px 20px rgba(0,200,83,.35);
+form button:hover {
+  background: #00a844;
+  transform: translateY(-2px);
 }
 
 button:active{
