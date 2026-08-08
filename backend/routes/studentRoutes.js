@@ -84,4 +84,39 @@ Router.delete("/:id", async (req, res) => {
 });
 
 
+
+// Update student with ID
+Router.put("/:id", async (req, res) => {
+  try {
+    const student = await Student.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (!student) {
+      return res.status(404).json({
+        msg: "Student not found",
+      });
+    }
+
+    res.status(200).json({
+      msg: "Student updated successfully",
+      student,
+    });
+  } catch (error) {
+    console.log("UPDATE STUDENT ERROR:", error);
+
+    res.status(500).json({
+      msg: "Failed to update student",
+      error: error.message,
+    });
+  }
+});
+
+
+
 module.exports= Router;
