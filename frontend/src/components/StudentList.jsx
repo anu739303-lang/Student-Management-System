@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./StudentList.css";
 
-function StudentList() {
+function StudentList({ onEditStudent }) {
   const [students, setStudents] = useState([]);
 
   const fetchStudents = async () => {
@@ -18,6 +18,7 @@ function StudentList() {
     fetchStudents();
   }, []);
 
+  // Delete Student
   const deleteStudent = async (id) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this student?"
@@ -30,8 +31,8 @@ function StudentList() {
     try {
       await axios.delete(`http://localhost:5000/students/${id}`);
 
-      setStudents(
-        students.filter((student) => student._id !== id)
+      setStudents((prevStudents) =>
+        prevStudents.filter((student) => student._id !== id)
       );
 
       alert("Student deleted successfully");
@@ -72,6 +73,15 @@ function StudentList() {
 
                   <td>
                     <button
+                      type="button"
+                      className="edit-btn"
+                      onClick={() => onEditStudent(student)}
+                    >
+                      Edit
+                    </button>
+
+                    <button
+                      type="button"
                       className="delete-btn"
                       onClick={() => deleteStudent(student._id)}
                     >
