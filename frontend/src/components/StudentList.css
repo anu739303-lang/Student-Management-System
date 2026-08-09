@@ -175,3 +175,34 @@
 .edit-btn:active {
   transform: translateY(0);
 }
+
+.search-box {
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.search-box input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 18px;
+
+  border: 1px solid #ddd;
+  border-radius: 10px;
+
+  background: #fff;
+  color: #333;
+
+  font-size: 15px;
+  outline: none;
+
+  transition: 0.2s ease;
+}
+
+.search-box input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+.search-box input::placeholder {
+  color: #999;
+}
