@@ -1,78 +1,230 @@
 /* Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
+/* =========================
+   STUDENT FORM
+========================= */
 
-body{
-    background:linear-gradient(135deg,#667eea,#764ba2);
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-form {
+.student-form {
   width: 100%;
-  max-width: 575px;
-  margin: 0 auto;
-  padding: 40px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
-form h2 {
-  text-align: center;
-  color: rgb(46, 8, 96);
-  margin-bottom: 30px;
-}
-
-form input {
+.student-form form {
   width: 100%;
-  padding: 16px 18px;
-  margin-bottom: 18px;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
+}
+
+.student-form input {
+  width: 100%;
+  height: 48px;
+
+  padding: 0 15px;
+
+  margin-bottom: 15px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #1f2937;
+
+  font-size: 14px;
+
   outline: none;
+
+  transition: all 0.25s ease;
+
+  box-sizing: border-box;
 }
 
-form input:focus {
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
+.student-form input::placeholder {
+  color: #9ca3af;
 }
 
-form button {
+.student-form input:focus {
+  border-color: #4f46e5;
+
+  box-shadow:
+    0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.student-form button {
   width: 100%;
-  padding: 16px;
+
+  height: 48px;
+
+  margin-top: 5px;
+
   border: none;
-  border-radius: 12px;
-  background: #00c853;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #4f46e5,
+      #7c3aed
+    );
+
   color: white;
-  font-size: 18px;
-  font-weight: bold;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
   cursor: pointer;
-  transition: 0.3s;
+
+  transition: all 0.25s ease;
+
+  box-shadow:
+    0 6px 15px rgba(79, 70, 229, 0.2);
 }
 
-form button:hover {
-  background: #00a844;
+.student-form button:hover {
   transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 20px rgba(79, 70, 229, 0.3);
 }
 
-button:active{
-    transform:scale(.98);
+.student-form button:active {
+  transform: translateY(0);
 }
 
-@media(max-width:500px){
 
-form{
-    width:90%;
-    padding:25px;
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+  .student-form input {
+    height: 45px;
+
+    font-size: 13px;
+  }
+
+  .student-form button {
+    height: 45px;
+  }
 }
 
+
+/* =========================
+   FORM MESSAGES
+========================= */
+
+.form-message {
+  width: 100%;
+  padding: 12px 15px;
+
+  margin-bottom: 15px;
+
+  border-radius: 9px;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  box-sizing: border-box;
+}
+
+.error-message {
+  background: #fef2f2;
+
+  border: 1px solid #fecaca;
+
+  color: #dc2626;
+}
+
+.success-message {
+  background: #f0fdf4;
+
+  border: 1px solid #bbf7d0;
+
+  color: #16a34a;
+}
+
+
+/* Disabled inputs */
+
+.student-form input:disabled {
+  background: #f3f4f6;
+
+  cursor: not-allowed;
+
+  opacity: 0.7;
+}
+
+
+/* Disabled button */
+
+.student-form button:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* Cancel button */
+
+.student-form .cancel-btn {
+  margin-top: 10px;
+
+  background: #6b7280;
+
+  box-shadow: none;
+}
+
+.student-form .cancel-btn:hover {
+  background: #4b5563;
+
+  box-shadow: none;
+}
+
+
+/* =================================
+   MOBILE FORM
+================================= */
+
+@media (max-width: 600px) {
+
+  .student-form {
+    width: 100%;
+  }
+
+  .student-form input {
+    width: 100%;
+
+    height: 46px;
+
+    padding: 0 12px;
+
+    margin-bottom: 12px;
+
+    font-size: 13px;
+  }
+
+  .student-form button {
+    width: 100%;
+
+    height: 46px;
+
+    font-size: 14px;
+  }
+
+  .form-message {
+    font-size: 12px;
+
+    padding: 10px 12px;
+
+    line-height: 1.4;
+  }
 }

@@ -318,3 +318,76 @@
     font-size: 19px;
   }
 }
+
+
+/* =================================
+   MOBILE DASHBOARD
+================================= */
+
+@media (max-width: 600px) {
+
+  .dashboard {
+    width: 100%;
+    margin: 20px auto;
+
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+  }
+
+  .stat-card {
+    width: 100%;
+
+    padding: 18px;
+
+    border-radius: 14px;
+  }
+
+  .stat-icon {
+    width: 52px;
+    height: 52px;
+
+    min-width: 52px;
+
+    font-size: 24px;
+
+    margin-right: 14px;
+  }
+
+  .stat-content p {
+    font-size: 11px;
+  }
+
+  .stat-content h3 {
+    font-size: 27px;
+  }
+
+  .stat-content span {
+    font-size: 11px;
+  }
+
+
+  /* Charts */
+
+  .course-chart {
+    width: 100%;
+
+    margin: 20px auto;
+
+    padding: 18px 12px;
+
+    border-radius: 14px;
+  }
+
+  .chart-header {
+    padding: 0 5px;
+  }
+
+  .chart-header h2 {
+    font-size: 18px;
+  }
+
+  .chart-header p {
+    font-size: 11px;
+  }
+}

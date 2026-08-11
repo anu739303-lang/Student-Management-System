@@ -11,7 +11,6 @@ function App() {
   const [students, setStudents] = useState([]);
   const [editStudent, setEditStudent] = useState(null);
 
-  // Fetch students
   const fetchStudents = async () => {
     try {
       const res = await axios.get("http://localhost:5000/students");
@@ -25,48 +24,146 @@ function App() {
     fetchStudents();
   }, []);
 
-  // Edit student
   const handleEditStudent = (student) => {
     setEditStudent(student);
+
+    // Scroll to registration form
+    setTimeout(() => {
+      document
+        .getElementById("student-form")
+        ?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
   };
 
-  // After update
   const handleStudentUpdated = () => {
     setEditStudent(null);
     fetchStudents();
   };
 
-  // After adding
   const handleStudentAdded = () => {
     fetchStudents();
   };
 
-  // After deleting
   const handleStudentDeleted = () => {
     fetchStudents();
   };
 
   return (
-    <div className="App">
-      <h1>Student Management System</h1>
+    <div className="app-container">
 
-      {/* Dashboard */}
-      <Dashboard students={students} />
+      {/* Navbar */}
+      <header className="navbar">
+        <div className="logo-section">
+          <div className="logo-icon">🎓</div>
 
-      {/* Student Form */}
-      <StudentForm
-        editStudent={editStudent}
-        onStudentUpdated={handleStudentUpdated}
-        onStudentAdded={handleStudentAdded}
-      />
+          <div>
+            <h2>Student Management</h2>
+            <span>Admin Dashboard</span>
+          </div>
+        </div>
 
-      {/* Student List */}
-      <StudentList
-        students={students}
-        setStudents={setStudents}
-        onEditStudent={handleEditStudent}
-        onStudentDeleted={handleStudentDeleted}
-      />
+        <div className="navbar-right">
+          <span className="dashboard-label">
+            Dashboard
+          </span>
+
+          <div className="profile">
+            <div className="profile-icon">👤</div>
+
+            <div className="profile-text">
+              <strong>Admin</strong>
+              <span>Administrator</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+
+      {/* Main Content */}
+      <main className="main-content">
+
+        {/* Page Heading */}
+        <section className="page-heading">
+          <div>
+            <h1>Dashboard</h1>
+
+            <p>
+              Manage students, courses and academic records
+            </p>
+          </div>
+
+          <div className="student-count">
+            <span>Last updated</span>
+            <strong>Live Data</strong>
+          </div>
+        </section>
+
+
+        {/* Dashboard Cards + Charts */}
+        <Dashboard students={students} />
+
+
+        {/* Registration */}
+        <section
+          id="student-form"
+          className="content-section"
+        >
+          <div className="section-title">
+            <h2>
+              {editStudent
+                ? "Edit Student"
+                : "Student Registration"}
+            </h2>
+
+            <p>
+              {editStudent
+                ? "Update the student's information"
+                : "Add a new student to the system"}
+            </p>
+          </div>
+
+          <StudentForm
+            editStudent={editStudent}
+            onStudentUpdated={handleStudentUpdated}
+            onStudentAdded={handleStudentAdded}
+          />
+        </section>
+
+
+        {/* Student List */}
+        <section className="content-section">
+
+          <div className="section-title">
+            <h2>Student Records</h2>
+
+            <p>
+              View, search, edit and delete student records
+            </p>
+          </div>
+
+          <StudentList
+            students={students}
+            setStudents={setStudents}
+            onEditStudent={handleEditStudent}
+            onStudentDeleted={handleStudentDeleted}
+          />
+
+        </section>
+
+      </main>
+
+
+      {/* Footer */}
+      <footer className="footer">
+        <p>
+          © 2026 Student Management System
+        </p>
+
+        <span>
+          Built with React & Node.js
+        </span>
+      </footer>
+
     </div>
   );
 }
