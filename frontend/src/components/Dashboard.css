@@ -391,3 +391,250 @@
     font-size: 11px;
   }
 }
+
+/* =========================
+   AVERAGE AGE CARD
+========================= */
+
+.age-card {
+  border-left: 5px solid #f59e0b;
+}
+
+.age-card .stat-icon {
+  background: #fffbeb;
+}
+
+.age-card .stat-content h3 {
+  color: #f59e0b;
+}
+
+.age-card::after {
+  background: #f59e0b;
+}
+
+
+/* =========================
+   DASHBOARD INSIGHTS
+========================= */
+
+.dashboard-insights {
+  width: 95%;
+  max-width: 1200px;
+  margin: 30px auto;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.insight-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 22px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.07);
+
+  transition: all 0.3s ease;
+}
+
+.insight-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.11);
+}
+
+.insight-icon {
+  width: 52px;
+  height: 52px;
+
+  min-width: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: #f3f4f6;
+
+  font-size: 25px;
+}
+
+.insight-card span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #6b7280;
+
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.insight-card h3 {
+  margin: 0;
+
+  font-size: 20px;
+
+  color: #1f2937;
+}
+
+.insight-card p {
+  margin: 4px 0 0;
+
+  font-size: 12px;
+
+  color: #9ca3af;
+}
+
+
+/* =========================
+   RECENT STUDENTS
+========================= */
+
+.recent-students {
+  width: 95%;
+  max-width: 1200px;
+
+  margin: 30px auto;
+
+  padding: 28px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.08);
+
+  box-sizing: border-box;
+}
+
+.recent-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.recent-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  margin-top: 20px;
+}
+
+.recent-table th {
+  padding: 14px;
+
+  text-align: left;
+
+  font-size: 13px;
+
+  color: #6b7280;
+
+  background: #f9fafb;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.recent-table td {
+  padding: 15px 14px;
+
+  font-size: 14px;
+
+  color: #4b5563;
+
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.recent-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.recent-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+.recent-table td strong {
+  color: #1f2937;
+}
+
+
+/* =========================
+   COURSE BADGE
+========================= */
+
+.course-badge {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  background: #eef2ff;
+
+  color: #4f46e5;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+  .dashboard-insights {
+    grid-template-columns: 1fr 1fr;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .dashboard-insights {
+    width: 90%;
+
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+  }
+
+  .insight-card {
+    padding: 18px;
+  }
+
+  .recent-students {
+    width: 100%;
+
+    padding: 18px;
+
+    border-radius: 14px;
+  }
+
+  .recent-table th,
+  .recent-table td {
+    padding: 11px;
+
+    font-size: 12px;
+  }
+
+}

@@ -1,151 +1,383 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "./api";
 
 import "./App.css";
 
 import Dashboard from "./components/Dashboard";
 import StudentForm from "./components/StudentForm";
 import StudentList from "./components/StudentList";
+import Login from "./components/Login";
 
 function App() {
+
+  // =========================
+  // ADMIN LOGIN STATE
+  // =========================
+
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("token")
+  );
+
+  const [admin, setAdmin] = useState(() => {
+    const savedAdmin = localStorage.getItem("admin");
+
+    return savedAdmin
+      ? JSON.parse(savedAdmin)
+      : null;
+  });
+
+
+  // =========================
+  // STUDENT STATE
+  // =========================
+
   const [students, setStudents] = useState([]);
-  const [editStudent, setEditStudent] = useState(null);
+
+  const [editStudent, setEditStudent] =
+    useState(null);
+
+
+  // =========================
+  // FETCH STUDENTS
+  // =========================
 
   const fetchStudents = async () => {
+
     try {
-      const res = await axios.get("http://localhost:5000/students");
+
+      const res = await API.get("/students");
+
       setStudents(res.data);
+
     } catch (error) {
+
       console.log(error);
+
     }
   };
 
+
+  // =========================
+  // FETCH ONLY AFTER LOGIN
+  // =========================
+
   useEffect(() => {
-    fetchStudents();
-  }, []);
+
+    if (isLoggedIn) {
+      fetchStudents();
+    }
+
+  }, [isLoggedIn]);
+
+
+  // =========================
+  // LOGIN
+  // =========================
+
+  const handleLogin = (adminData) => {
+
+    setAdmin(adminData);
+
+    setIsLoggedIn(true);
+
+  };
+
+
+  // =========================
+  // LOGOUT
+  // =========================
+
+  const handleLogout = () => {
+
+    localStorage.removeItem("token");
+
+    localStorage.removeItem("admin");
+
+    setAdmin(null);
+
+    setIsLoggedIn(false);
+
+  };
+
+
+  // =========================
+  // EDIT STUDENT
+  // =========================
 
   const handleEditStudent = (student) => {
+
     setEditStudent(student);
 
-    // Scroll to registration form
     setTimeout(() => {
+
       document
         .getElementById("student-form")
-        ?.scrollIntoView({ behavior: "smooth" });
+        ?.scrollIntoView({
+          behavior: "smooth",
+        });
+
     }, 100);
   };
 
+
+  // =========================
+  // STUDENT UPDATED
+  // =========================
+
   const handleStudentUpdated = () => {
+
     setEditStudent(null);
+
     fetchStudents();
+
   };
+
+
+  // =========================
+  // STUDENT ADDED
+  // =========================
 
   const handleStudentAdded = () => {
+
     fetchStudents();
+
   };
+
+
+  // =========================
+  // STUDENT DELETED
+  // =========================
 
   const handleStudentDeleted = () => {
+
     fetchStudents();
+
   };
 
+
+  // =========================
+  // SHOW LOGIN PAGE
+  // =========================
+
+  if (!isLoggedIn) {
+
+    return (
+      <Login
+        onLogin={handleLogin}
+      />
+    );
+
+  }
+
+
+  // =========================
+  // DASHBOARD
+  // =========================
+
   return (
+
     <div className="app-container">
 
-      {/* Navbar */}
+
+      {/* =========================
+          NAVBAR
+      ========================= */}
+
       <header className="navbar">
+
         <div className="logo-section">
-          <div className="logo-icon">🎓</div>
+
+          <div className="logo-icon">
+            🎓
+          </div>
 
           <div>
-            <h2>Student Management</h2>
-            <span>Admin Dashboard</span>
+
+            <h2>
+              Student Management
+            </h2>
+
+            <span>
+              Admin Dashboard
+            </span>
+
           </div>
+
         </div>
 
+
         <div className="navbar-right">
+
           <span className="dashboard-label">
             Dashboard
           </span>
 
+
+          {/* ADMIN PROFILE */}
+
           <div className="profile">
-            <div className="profile-icon">👤</div>
+
+            <div className="profile-icon">
+              👤
+            </div>
 
             <div className="profile-text">
-              <strong>Admin</strong>
-              <span>Administrator</span>
+
+              <strong>
+                {admin?.name || "Admin"}
+              </strong>
+
+              <span>
+                {admin?.role || "Administrator"}
+              </span>
+
             </div>
+
+
+            {/* LOGOUT */}
+
+            <button
+              className="logout-btn"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+
           </div>
+
         </div>
+
       </header>
 
 
-      {/* Main Content */}
+      {/* =========================
+          MAIN CONTENT
+      ========================= */}
+
       <main className="main-content">
 
-        {/* Page Heading */}
+
+        {/* PAGE HEADING */}
+
         <section className="page-heading">
+
           <div>
-            <h1>Dashboard</h1>
+
+            <h1>
+              Dashboard
+            </h1>
 
             <p>
-              Manage students, courses and academic records
+              Manage students, courses and
+              academic records
             </p>
+
           </div>
 
+
           <div className="student-count">
-            <span>Last updated</span>
-            <strong>Live Data</strong>
+
+            <span>
+              Last updated
+            </span>
+
+            <strong>
+              Live Data
+            </strong>
+
           </div>
+
         </section>
 
 
-        {/* Dashboard Cards + Charts */}
-        <Dashboard students={students} />
+        {/* =========================
+            DASHBOARD
+        ========================= */}
+
+        <Dashboard
+          students={students}
+        />
 
 
-        {/* Registration */}
+        {/* =========================
+            STUDENT REGISTRATION
+        ========================= */}
+
         <section
           id="student-form"
           className="content-section"
         >
+
           <div className="section-title">
+
             <h2>
+
               {editStudent
                 ? "Edit Student"
                 : "Student Registration"}
+
             </h2>
 
             <p>
+
               {editStudent
                 ? "Update the student's information"
                 : "Add a new student to the system"}
+
             </p>
+
           </div>
 
+
           <StudentForm
+
             editStudent={editStudent}
-            onStudentUpdated={handleStudentUpdated}
-            onStudentAdded={handleStudentAdded}
+
+            onStudentUpdated={
+              handleStudentUpdated
+            }
+
+            onStudentAdded={
+              handleStudentAdded
+            }
+
           />
+
         </section>
 
 
-        {/* Student List */}
+        {/* =========================
+            STUDENT RECORDS
+        ========================= */}
+
         <section className="content-section">
 
           <div className="section-title">
-            <h2>Student Records</h2>
+
+            <h2>
+              Student Records
+            </h2>
 
             <p>
-              View, search, edit and delete student records
+              View, search, edit and delete
+              student records
             </p>
+
           </div>
 
+
           <StudentList
+
             students={students}
+
             setStudents={setStudents}
-            onEditStudent={handleEditStudent}
-            onStudentDeleted={handleStudentDeleted}
+
+            onEdit={handleEditStudent}
+
+            onStudentDeleted={
+              handleStudentDeleted
+            }
+
           />
 
         </section>
@@ -153,8 +385,12 @@ function App() {
       </main>
 
 
-      {/* Footer */}
+      {/* =========================
+          FOOTER
+      ========================= */}
+
       <footer className="footer">
+
         <p>
           © 2026 Student Management System
         </p>
@@ -162,6 +398,7 @@ function App() {
         <span>
           Built with React & Node.js
         </span>
+
       </footer>
 
     </div>

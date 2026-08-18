@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../api";
 import "./StudentForm.css";
 
 function StudentForm({
@@ -104,7 +104,7 @@ function StudentForm({
 
       // UPDATE
       if (editStudent) {
-        await axios.put(
+        await API.put(
           `http://localhost:5000/students/${editStudent._id}`,
           studentData
         );
@@ -120,7 +120,7 @@ function StudentForm({
 
       // ADD
       else {
-        await axios.post(
+        await API.post(
           "http://localhost:5000/students",
           studentData
         );
