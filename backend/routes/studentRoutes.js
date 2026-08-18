@@ -1,122 +1,193 @@
 const express = require("express");
 const Student = require("../models/Student");
+const authMiddleware = require("../middleware/authMiddleware");
+
 const Router = express.Router();
 
-// Create New Student
+
+// ========================================
+// PROTECT ALL STUDENT ROUTES
+// ========================================
+
+Router.use(authMiddleware);
+
+
+// ========================================
+// CREATE NEW STUDENT
+// ========================================
+
 Router.post("/", async (req, res) => {
   try {
+
     const student = await Student.create(req.body);
 
     res.status(201).json({
       msg: "Student created successfully",
       student,
     });
+
   } catch (error) {
+
     console.log("CREATE STUDENT ERROR:", error);
 
     // Duplicate email
     if (error.code === 11000) {
+
       return res.status(400).json({
         msg: "Email already exists. Please use a different email.",
       });
+
     }
 
     res.status(500).json({
       msg: "Failed to create student",
       error: error.message,
     });
+
   }
 });
 
-// View all Students
-Router.get("/",async(req,res)=>{
-    try{
-    const student = await Student.find();
-    res.status(201).json(student)
-        
-        
-    } catch(error){
-        res.status(501).json({
-            msg:error
-        })
-    }
-})
 
+// ========================================
+// VIEW ALL STUDENTS
+// ========================================
 
-//View student with Id
-Router.get("/:id",async(req,res)=>{
-    try{
-    const student = await Student.findById(req.params.id);
-    if(!student){
-        res.satuts(404).json({
-            msg:"student not found"
-        })
-    }
-    } catch(error){
-        res.status(501).json({
-            msg:"imposter id"
-        })
-    }
-})
-    
-    
+Router.get("/", async (req, res) => {
 
-// Delete student with ID
-Router.delete("/:id", async (req, res) => {
   try {
-    const student = await Student.findByIdAndDelete(req.params.id);
+
+    const students = await Student.find();
+
+    res.status(200).json(students);
+
+  } catch (error) {
+
+    res.status(500).json({
+      msg: "Failed to fetch students",
+      error: error.message,
+    });
+
+  }
+
+});
+
+
+// ========================================
+// VIEW STUDENT BY ID
+// ========================================
+
+Router.get("/:id", async (req, res) => {
+
+  try {
+
+    const student = await Student.findById(
+      req.params.id
+    );
 
     if (!student) {
+
       return res.status(404).json({
         msg: "Student not found",
       });
+
+    }
+
+    res.status(200).json(student);
+
+  } catch (error) {
+
+    res.status(400).json({
+      msg: "Invalid student ID",
+    });
+
+  }
+
+});
+
+
+// ========================================
+// DELETE STUDENT
+// ========================================
+
+Router.delete("/:id", async (req, res) => {
+
+  try {
+
+    const student =
+      await Student.findByIdAndDelete(
+        req.params.id
+      );
+
+    if (!student) {
+
+      return res.status(404).json({
+        msg: "Student not found",
+      });
+
     }
 
     res.status(200).json({
       msg: "Student deleted successfully",
       student,
     });
+
   } catch (error) {
-    res.status(500).json({
+
+    res.status(400).json({
       msg: "Invalid student ID",
     });
+
   }
+
 });
 
 
+// ========================================
+// UPDATE STUDENT
+// ========================================
 
-// Update student with ID
 Router.put("/:id", async (req, res) => {
+
   try {
-    const student = await Student.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+
+    const student =
+      await Student.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
 
     if (!student) {
+
       return res.status(404).json({
         msg: "Student not found",
       });
+
     }
 
     res.status(200).json({
       msg: "Student updated successfully",
       student,
     });
+
   } catch (error) {
-    console.log("UPDATE STUDENT ERROR:", error);
+
+    console.log(
+      "UPDATE STUDENT ERROR:",
+      error
+    );
 
     res.status(500).json({
       msg: "Failed to update student",
       error: error.message,
     });
+
   }
+
 });
 
 
-
-module.exports= Router;
+module.exports = Router;

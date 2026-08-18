@@ -1,31 +1,57 @@
+require("dotenv").config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
 const app = express();
-const PORT =5000;
 
-//Enabling Cors
+const PORT = process.env.PORT || 5000;
+
+
+// =========================
+// MIDDLEWARE
+// =========================
+
 app.use(cors());
 
-//Global Middleware
 app.use(express.json());
 
-// Mongoose connection
-mongoose.connect("mongodb://127.0.0.1:27017/studentSystemDB").then(
-   
-    ()=>{console.log("DB Connected Suceesfully..")}
-).catch((err)=>{
-    console.log(err);
-})
+
+// =========================
+// ROUTES
+// =========================
+
+// Auth Routes
+const authRoutes = require("./routes/authRoutes");
+app.use("/auth", authRoutes);
 
 
-
-//Routing
+// Student Routes
 const studentRoutes = require("./routes/studentRoutes");
-app.use("/students",studentRoutes);
+app.use("/students", studentRoutes);
 
-//server listen
-app.listen(PORT,()=>{
-    console.log(`server is working fine on port number ${PORT}`)
-})
+
+// =========================
+// MONGODB CONNECTION
+// =========================
+
+mongoose
+  .connect("mongodb://127.0.0.1:27017/studentSystemDB")
+  .then(() => {
+    console.log("DB Connected Successfully..");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+
+// =========================
+// SERVER
+// =========================
+
+app.listen(PORT, () => {
+  console.log(
+    `Server is working fine on port number ${PORT}`
+  );
+});
